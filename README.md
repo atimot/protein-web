@@ -1,3 +1,26 @@
+# 環境構築
+#### ビルド
+```
+docker compose build
+```
+
+#### 開発
+```
+docker compose up -d
+```
+
+#### ブラウザで確認
+http://localhost:5173
+
+
+## Tips
+#### コンテナの中に入りたいとき
+```
+docker compose exec node bash
+```
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
