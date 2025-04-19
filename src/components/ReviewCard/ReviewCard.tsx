@@ -2,23 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { formatDistanceToNow } from "date-fns"
 import { ja } from "date-fns/locale"
-
-interface Review {
-  id: number
-  user: {
-    name: string
-    avatar: string
-    level: string
-  }
-  postedAt: string
-  images: string[]
-  productName: string
-  flavorProfile: string
-  foamLevel: string
-  proteinPerServing: string
-  pricePerServing: string
-  comment: string
-}
+import { Review } from "@/types/review"
 
 interface ProteinReviewCardProps {
   review: Review
