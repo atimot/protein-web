@@ -19,6 +19,12 @@ http://localhost:5173
 docker compose exec node bash
 ```
 
+#### Storybookでコンポーネントを確認したいとき
+コンテナの中に入って
+```
+npm run storybook
+```
+
 ---
 
 # React + TypeScript + Vite
