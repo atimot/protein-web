@@ -1,1 +1,1 @@
-export { ProteinReviewCard } from './ReviewCard'; 
+export { ProteinReviewCard } from "./ReviewCard";

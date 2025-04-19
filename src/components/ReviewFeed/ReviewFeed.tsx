@@ -1,5 +1,5 @@
-import React from 'react';
-import { ProteinReviewCard } from "@/components/ReviewCard/"
+import React from "react";
+import { ProteinReviewCard } from "@/components/ReviewCard/";
 
 // サンプルデータ
 const reviews = [
@@ -63,7 +63,7 @@ const reviews = [
     comment:
       "世界中で愛されているプロテインの定番です。溶けやすさは素晴らしく、シェイカーで10秒振るだけでほぼ完全に溶けます。泡立ちもほとんどなく、すぐに飲めるのが良いです。味も濃すぎず薄すぎず絶妙なバランス。少し値段は高めですが、品質を考えると納得できる価格です。",
   },
-]
+];
 
 export const ReviewFeed: React.FC = () => {
   return (
@@ -72,5 +72,5 @@ export const ReviewFeed: React.FC = () => {
         <ProteinReviewCard key={review.id} review={review} />
       ))}
     </div>
-  )
+  );
 };
