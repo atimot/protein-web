@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface User {
   id: string;
@@ -14,13 +14,13 @@ export const useAuth = () => {
     // 認証状態の確認
     const checkAuth = async () => {
       try {
-        const response = await fetch('/api/auth/me');
+        const response = await fetch("/api/auth/me");
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
         }
       } catch (error) {
-        console.error('Auth check failed:', error);
+        console.error("Auth check failed:", error);
       } finally {
         setLoading(false);
       }
@@ -31,9 +31,9 @@ export const useAuth = () => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
       if (response.ok) {
@@ -43,19 +43,19 @@ export const useAuth = () => {
       }
       return false;
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
       return false;
     }
   };
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
+      await fetch("/api/auth/logout", { method: "POST" });
       setUser(null);
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
   return { user, loading, login, logout };
-}; 
+};

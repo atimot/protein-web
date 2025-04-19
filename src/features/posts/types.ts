@@ -9,4 +9,4 @@ export interface Post {
 export interface PostListProps {
   posts: Post[];
   onPostClick: (postId: number) => void;
-} 
+}

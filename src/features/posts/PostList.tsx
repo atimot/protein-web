@@ -1,6 +1,6 @@
-import React from 'react';
-import { Post, PostListProps } from './types';
-import { Button } from '../../components/Button';
+import React from "react";
+import { Post, PostListProps } from "./types";
+import { Button } from "../../components/Button";
 
 export const PostList: React.FC<PostListProps> = ({ posts, onPostClick }) => {
   return (
@@ -18,4 +18,4 @@ export const PostList: React.FC<PostListProps> = ({ posts, onPostClick }) => {
       ))}
     </div>
   );
-}; 
+};

@@ -1,4 +1,5 @@
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000/api';
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:3000/api";
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, string>;
@@ -7,19 +8,19 @@ interface RequestOptions extends RequestInit {
 export class ApiClient {
   private static async request<T>(
     endpoint: string,
-    options: RequestOptions = {}
+    options: RequestOptions = {},
   ): Promise<T> {
     const { params, ...restOptions } = options;
     const queryString = params
       ? `?${new URLSearchParams(params).toString()}`
-      : '';
+      : "";
     const url = `${API_BASE_URL}${endpoint}${queryString}`;
 
     try {
       const response = await fetch(url, {
         ...restOptions,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           ...restOptions.headers,
         },
       });
@@ -30,30 +31,33 @@ export class ApiClient {
 
       return response.json();
     } catch (error) {
-      console.error('API request failed:', error);
+      console.error("API request failed:", error);
       throw error;
     }
   }
 
-  static async get<T>(endpoint: string, params?: Record<string, string>): Promise<T> {
-    return this.request<T>(endpoint, { method: 'GET', params });
+  static async get<T>(
+    endpoint: string,
+    params?: Record<string, string>,
+  ): Promise<T> {
+    return this.request<T>(endpoint, { method: "GET", params });
   }
 
   static async post<T>(endpoint: string, data: unknown): Promise<T> {
     return this.request<T>(endpoint, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(data),
     });
   }
 
   static async put<T>(endpoint: string, data: unknown): Promise<T> {
     return this.request<T>(endpoint, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(data),
     });
   }
 
   static async delete<T>(endpoint: string): Promise<T> {
-    return this.request<T>(endpoint, { method: 'DELETE' });
+    return this.request<T>(endpoint, { method: "DELETE" });
   }
-} 
+}
