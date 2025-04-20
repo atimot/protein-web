@@ -4,6 +4,13 @@
 docker compose build
 ```
 
+#### ホスト側にnode_modulesをインストール
+ローカルで開発する際、node_modulesがないと参照エラーが発生してしまう
+また、docker-compose.yml でボリュームをマウントするときにホスト側のnode_moduleが空だとコンテナ側のnode_moduleも空で上書きしてしまう
+```
+docker compose run --rm node npm install
+```
+
 #### 開発
 ```
 docker compose up -d
