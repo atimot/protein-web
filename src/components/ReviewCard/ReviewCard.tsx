@@ -8,7 +8,7 @@ interface ProteinReviewCardProps {
   review: Review;
 }
 
-export const ProteinReviewCard: React.FC<ProteinReviewCardProps> = ({
+export const ReviewCard: React.FC<ProteinReviewCardProps> = ({
   review,
 }) => {
   const postedDate = new Date(review.postedAt);
