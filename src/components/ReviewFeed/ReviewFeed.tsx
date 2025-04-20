@@ -1,11 +1,13 @@
 import React from "react";
-import { ProteinReviewCard } from "@/components/ReviewCard/";
+import { ReviewCard } from "@/components/ReviewCard/";
+import { Review } from "@/types/review";
 
 // サンプルデータ
-const reviews = [
+const reviews: Review[] = [
   {
     id: 1,
     user: {
+      id: 1,
       name: "筋トレマン",
       avatar: "/placeholder.svg?height=40&width=40",
       level: "プロテイン上級者",
@@ -28,6 +30,7 @@ const reviews = [
   {
     id: 2,
     user: {
+      id: 2,
       name: "フィットネス女子",
       avatar: "/placeholder.svg?height=40&width=40",
       level: "週3トレーニング",
@@ -45,6 +48,7 @@ const reviews = [
   {
     id: 3,
     user: {
+      id: 3,
       name: "プロテインマニア",
       avatar: "/placeholder.svg?height=40&width=40",
       level: "プロテインコレクター",
@@ -69,7 +73,7 @@ export const ReviewFeed: React.FC = () => {
   return (
     <div className="space-y-6">
       {reviews.map((review) => (
-        <ProteinReviewCard key={review.id} review={review} />
+        <ReviewCard key={review.id} review={review} />
       ))}
     </div>
   );
