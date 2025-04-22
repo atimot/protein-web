@@ -3,7 +3,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { ReviewCard } from "./ReviewCard";
 import { Review } from "@/types/review";
 
-const meta = {
+const meta: Meta<typeof ReviewCard> = {
   title: "ReviewCard",
   component: ReviewCard,
   parameters: {
@@ -17,7 +17,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-} satisfies Meta<typeof ReviewCard>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
