@@ -1,10 +1,17 @@
 services:
   node:
-    build: .
+    build: ./frontend
     volumes:
-      - .:/app
+      - ./frontend:/app
     ports:
       - '3000:3000'
       - '5173:5173'
       - '6006:6006'
-    command: ["npm", "run", "dev"]
+    tty: true
+  app:
+    build: ./backend
+    volumes:
+      - ./backend/app:/app
+    ports:
+      - "8080:8080"
+    tty: true
