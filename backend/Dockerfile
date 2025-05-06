@@ -2,9 +2,9 @@ FROM golang:1.24.2-bookworm
 
 WORKDIR /app
 
-COPY ./app/go.mod ./
+COPY ./go.mod .
 RUN go mod download
-COPY ./app ./
+COPY . .
 
 RUN go install github.com/air-verse/air@latest
 # RUN go install go.uber.org/mock/mockgen@v0.3.0
