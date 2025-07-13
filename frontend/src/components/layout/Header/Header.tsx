@@ -11,7 +11,7 @@ export const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-gray-200 dark:bg-gray-900 dark:border-gray-800 ${className}`}>
+    <header className={`sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200 dark:bg-gray-900 dark:border-gray-800 ${className}`}>
       <div className="flex items-center justify-between px-4 py-3 md:px-6 md:py-4 lg:px-8 max-w-4xl mx-auto">
         <button
           onClick={handleLogoClick}
