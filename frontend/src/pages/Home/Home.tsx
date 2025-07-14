@@ -2,7 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ReviewFeed } from "@/components/ReviewFeed";
 
-export const Timeline: React.FC = () => {
+export const Home: React.FC = () => {
   return (
     <div className="min-h-screen">
       <Header />
@@ -17,4 +17,4 @@ export const Timeline: React.FC = () => {
       <Footer />
     </div>
   );
-};
+}; 

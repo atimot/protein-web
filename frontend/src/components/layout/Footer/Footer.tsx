@@ -64,8 +64,8 @@ export const Footer: React.FC = () => {
             filledIcon={MdHome}
           />
           <IconButton 
-            to="/search" 
-            ariaLabel="検索" 
+            to="/discover" 
+            ariaLabel="発見" 
             outlineIcon={MdOutlineSearch}
             filledIcon={MdSearch}
           />
