@@ -14,11 +14,9 @@ export const Header: React.FC = () => {
   );
 
   const logoLinkClasses = cn(
-    "inline-flex items-center rounded-lg transition-colors duration-200",
-    "p-2 -ml-2 md:p-3 md:-ml-3",
-    "hover:bg-gray-100 dark:hover:bg-gray-800",
-    "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
-    "no-underline" // リンクのデフォルトスタイルを無効化
+    "inline-flex items-center transition-colors duration-200",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+    "no-underline"
   );
 
   const titleClasses = cn(
