@@ -23,12 +23,6 @@ export const Default: Story = {
   args: {},
 };
 
-export const WithCustomClass: Story = {
-  args: {
-    className: "custom-footer",
-  },
-};
-
 // ダークモードでのストーリー
 export const DarkMode: Story = {
   args: {},

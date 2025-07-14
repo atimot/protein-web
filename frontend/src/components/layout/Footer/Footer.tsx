@@ -1,15 +1,10 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-interface FooterProps {
-  className?: string;
-}
-
-export const Footer: React.FC<FooterProps> = ({ className }) => {
+export const Footer: React.FC = () => {
   const footerClasses = cn(
     "sticky bottom-0 z-50 bg-white border-t border-gray-200 mt-auto",
     "dark:bg-gray-900 dark:border-gray-800",
-    className
   );
 
   const containerClasses = cn(
