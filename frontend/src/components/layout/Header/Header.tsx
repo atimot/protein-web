@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
 
   const logoLinkClasses = cn(
     "inline-flex items-center transition-colors duration-200",
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2",
     "no-underline"
   );
 
@@ -23,10 +23,14 @@ export const Header: React.FC = () => {
     "m-0 font-bold text-2xl md:text-3xl"
   );
 
-  const spanClasses = cn(
-    "text-transparent bg-clip-text bg-gradient-to-r font-sans tracking-tight",
-    "from-blue-600 to-purple-600",
-    "dark:from-blue-400 dark:to-purple-400"
+  const proteInClasses = cn(
+    "font-sans tracking-tight text-amber-900",
+    "dark:text-amber-600"
+  );
+
+  const ternetClasses = cn(
+    "font-sans tracking-tight text-amber-700",
+    "dark:text-amber-500"
   );
 
   return (
@@ -38,9 +42,8 @@ export const Header: React.FC = () => {
             className={logoLinkClasses}
             aria-label="ホームに戻る"
           >
-            <span className={spanClasses}>
-              proteInternet
-            </span>
+            <span className={proteInClasses}>proteIn</span>
+            <span className={ternetClasses}>ternet</span>
           </Link>
         </h1>
       </div>
