@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 const meta = {
-  title: "Layout/Header",
-  component: Header,
+  title: "Layout/Footer",
+  component: Footer,
   parameters: {
     layout: "fullscreen",
   },
@@ -14,13 +14,19 @@ const meta = {
       description: "追加のCSSクラス名",
     },
   },
-} satisfies Meta<typeof Header>;
+} satisfies Meta<typeof Footer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
+};
+
+export const WithCustomClass: Story = {
+  args: {
+    className: "custom-footer",
+  },
 };
 
 // ダークモードでのストーリー
@@ -56,4 +62,4 @@ export const Tablet: Story = {
       defaultViewport: "tablet",
     },
   },
-};
+}; 
