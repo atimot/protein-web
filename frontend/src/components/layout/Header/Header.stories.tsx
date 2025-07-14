@@ -1,17 +1,17 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Header } from './Header';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Header } from "./Header";
 
 const meta = {
-  title: 'Layout/Header',
+  title: "Layout/Header",
   component: Header,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     className: {
-      control: 'text',
-      description: '追加のCSSクラス名',
+      control: "text",
+      description: "追加のCSSクラス名",
     },
   },
 } satisfies Meta<typeof Header>;
@@ -25,7 +25,7 @@ export const Default: Story = {
 
 export const WithCustomClass: Story = {
   args: {
-    className: 'custom-header',
+    className: "custom-header",
   },
 };
 
@@ -33,7 +33,7 @@ export const WithCustomClass: Story = {
 export const DarkMode: Story = {
   args: {},
   parameters: {
-    backgrounds: { default: 'dark' },
+    backgrounds: { default: "dark" },
   },
   decorators: [
     (Story) => (
@@ -49,7 +49,7 @@ export const Mobile: Story = {
   args: {},
   parameters: {
     viewport: {
-      defaultViewport: 'mobile1',
+      defaultViewport: "mobile1",
     },
   },
 };
@@ -59,7 +59,7 @@ export const Tablet: Story = {
   args: {},
   parameters: {
     viewport: {
-      defaultViewport: 'tablet',
+      defaultViewport: "tablet",
     },
   },
-}; 
+};

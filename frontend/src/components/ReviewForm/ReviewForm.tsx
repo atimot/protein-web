@@ -1,21 +1,30 @@
 import type React from "react";
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ImageUpload } from "@/components/ImageUpload/ImageUpload"
-import type { ReviewFormData } from "@/types/review"
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ImageUpload } from "@/components/ImageUpload/ImageUpload";
+import type { ReviewFormData } from "@/types/review";
 
 interface ReviewFormProps {
-  onSubmit: (data: ReviewFormData) => void
-  isSubmitting: boolean
+  onSubmit: (data: ReviewFormData) => void;
+  isSubmitting: boolean;
 }
 
-export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }) => {
+export const ReviewForm: React.FC<ReviewFormProps> = ({
+  onSubmit,
+  isSubmitting,
+}) => {
   const [formData, setFormData] = useState<ReviewFormData>({
     productName: "",
     flavorProfile: "",
@@ -25,11 +34,13 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
     pricePerServing: "",
     comment: "",
     images: [],
-  })
+  });
 
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -40,7 +51,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
         return newErrors;
       });
     }
-  }
+  };
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -52,11 +63,11 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
         return newErrors;
       });
     }
-  }
+  };
 
   const handleImagesChange = (files: File[]) => {
     setFormData((prev) => ({ ...prev, images: files }));
-  }
+  };
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -76,7 +87,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
     if (!formData.foamLevel) {
       newErrors.foamLevel = "泡立ちを選択してください";
     }
-    
+
     if (!formData.proteinPerServing.trim()) {
       newErrors.proteinPerServing = "タンパク質量を入力してください";
     }
@@ -91,7 +102,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,11 +112,11 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
       const submitData = {
         ...formData,
         flavorProfile: flavorProfileWithType,
-      }
+      };
 
       onSubmit(submitData);
     }
-  }
+  };
 
   return (
     <Card>
@@ -122,14 +133,26 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
                 placeholder="例: マイプロテイン Impact ホエイ"
                 className={errors.productName ? "border-red-500" : ""}
               />
-              {errors.productName && <p className="text-red-500 text-xs mt-1">{errors.productName}</p>}
+              {errors.productName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.productName}
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="flavorType">味の傾向 *</Label>
-                <Select value={formData.flavorType} onValueChange={(value) => handleSelectChange("flavorType", value)}>
-                  <SelectTrigger id="flavorType" className={errors.flavorType ? "border-red-500" : ""}>
+                <Select
+                  value={formData.flavorType}
+                  onValueChange={(value) =>
+                    handleSelectChange("flavorType", value)
+                  }
+                >
+                  <SelectTrigger
+                    id="flavorType"
+                    className={errors.flavorType ? "border-red-500" : ""}
+                  >
                     <SelectValue placeholder="選択してください" />
                   </SelectTrigger>
                   <SelectContent>
@@ -139,7 +162,11 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
                     <SelectItem value="その他">その他</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.flavorType && <p className="text-red-500 text-xs mt-1">{errors.flavorType}</p>}
+                {errors.flavorType && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.flavorType}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -152,26 +179,44 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
                   placeholder="例: チョコレート"
                   className={errors.flavorProfile ? "border-red-500" : ""}
                 />
-                {errors.flavorProfile && <p className="text-red-500 text-xs mt-1">{errors.flavorProfile}</p>}
+                {errors.flavorProfile && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.flavorProfile}
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="foamLevel">泡立ち *</Label>
-                <Select value={formData.foamLevel} onValueChange={(value) => handleSelectChange("foamLevel", value)}>
-                  <SelectTrigger id="foamLevel" className={errors.foamLevel ? "border-red-500" : ""}>
+                <Select
+                  value={formData.foamLevel}
+                  onValueChange={(value) =>
+                    handleSelectChange("foamLevel", value)
+                  }
+                >
+                  <SelectTrigger
+                    id="foamLevel"
+                    className={errors.foamLevel ? "border-red-500" : ""}
+                  >
                     <SelectValue placeholder="選択" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="非常に低い（★☆☆☆☆）">非常に低い</SelectItem>
+                    <SelectItem value="非常に低い（★☆☆☆☆）">
+                      非常に低い
+                    </SelectItem>
                     <SelectItem value="低め（★★☆☆☆）">低め</SelectItem>
                     <SelectItem value="普通（★★★☆☆）">普通</SelectItem>
                     <SelectItem value="やや高め（★★★★☆）">やや高め</SelectItem>
                     <SelectItem value="高い（★★★★★）">高い</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.foamLevel && <p className="text-red-500 text-xs mt-1">{errors.foamLevel}</p>}
+                {errors.foamLevel && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.foamLevel}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -184,7 +229,11 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
                   placeholder="例: 24g"
                   className={errors.proteinPerServing ? "border-red-500" : ""}
                 />
-                {errors.proteinPerServing && <p className="text-red-500 text-xs mt-1">{errors.proteinPerServing}</p>}
+                {errors.proteinPerServing && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.proteinPerServing}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -197,7 +246,11 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
                   placeholder="例: ¥180"
                   className={errors.pricePerServing ? "border-red-500" : ""}
                 />
-                {errors.pricePerServing && <p className="text-red-500 text-xs mt-1">{errors.pricePerServing}</p>}
+                {errors.pricePerServing && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.pricePerServing}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -211,7 +264,9 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
                 placeholder="味、溶けやすさ、コスパなどについて詳しく教えてください"
                 className={`min-h-[120px] ${errors.comment ? "border-red-500" : ""}`}
               />
-              {errors.comment && <p className="text-red-500 text-xs mt-1">{errors.comment}</p>}
+              {errors.comment && (
+                <p className="text-red-500 text-xs mt-1">{errors.comment}</p>
+              )}
             </div>
 
             <div>
@@ -226,5 +281,5 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, isSubmitting }
         </form>
       </CardContent>
     </Card>
-  )
-}
+  );
+};

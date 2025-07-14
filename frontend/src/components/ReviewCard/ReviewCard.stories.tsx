@@ -44,10 +44,10 @@ const review: Review = {
   pricePerServing: "¥180",
   comment:
     "溶けやすさは抜群で、水でも美味しく飲めます。チョコレートの風味が強すぎず、飲みやすいです。トレーニング後にすぐ飲んでも胃もたれしません。コスパも良く、継続して飲みやすいプロテインだと思います。",
-}
+};
 
 export const Default: Story = {
   args: {
     review,
   },
-}; 
+};

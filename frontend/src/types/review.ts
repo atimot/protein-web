@@ -19,12 +19,12 @@ export interface Review {
 }
 
 export interface ReviewFormData {
-  productName: string
-  flavorProfile: string
-  flavorType: string
-  foamLevel: string
-  proteinPerServing: string
-  pricePerServing: string
-  comment: string
-  images: File[]
+  productName: string;
+  flavorProfile: string;
+  flavorType: string;
+  foamLevel: string;
+  proteinPerServing: string;
+  pricePerServing: string;
+  comment: string;
+  images: File[];
 }

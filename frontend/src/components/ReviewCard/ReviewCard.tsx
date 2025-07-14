@@ -8,9 +8,7 @@ interface ProteinReviewCardProps {
   review: Review;
 }
 
-export const ReviewCard: React.FC<ProteinReviewCardProps> = ({
-  review,
-}) => {
+export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
   const postedDate = new Date(review.postedAt);
   const timeAgo = formatDistanceToNow(postedDate, {
     addSuffix: true,

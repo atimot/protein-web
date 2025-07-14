@@ -13,7 +13,7 @@ const meta: Meta<typeof ReviewForm> = {
       <div className="max-w-[500px] mx-auto">
         <Story />
       </div>
-    )
+    ),
   ],
   tags: ["autodocs"],
 };

@@ -15,4 +15,4 @@ export const Timeline: React.FC = () => {
       </main>
     </>
   );
-}; 
+};
