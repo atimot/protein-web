@@ -6,8 +6,10 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"myapp/internal/handler"
+	"myapp/internal/migration"
 	"myapp/internal/repository"
 	"myapp/internal/service"
 
@@ -37,6 +39,14 @@ func main() {
 	if err := db.Ping(); err != nil {
 		log.Fatal(err)
 	}
+
+	// Run database migrations
+	migrationsDir := filepath.Join(".", "migrations")
+	migrationRunner := migration.NewRunner(db, migrationsDir)
+	if err := migrationRunner.Run(); err != nil {
+		log.Fatal("Migration failed:", err)
+	}
+
 	repo := repository.NewUserRepository(db)
 	svc := service.NewUserService(repo)
 	h := handler.NewUserHandler(svc)
