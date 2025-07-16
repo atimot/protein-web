@@ -1,3 +1,2 @@
--- Drop users table and migration history table
+-- Drop users table
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS migration_history;

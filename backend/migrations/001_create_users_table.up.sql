@@ -10,10 +10,3 @@ CREATE TABLE users (
     INDEX idx_email (email),
     INDEX idx_created_at (created_at)
 );
-
--- Create migration history table to track applied migrations
-CREATE TABLE migration_history (
-    version INT PRIMARY KEY,
-    filename VARCHAR(255) NOT NULL,
-    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
