@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
 import { 
   MdOutlineHome, MdHome,
   MdOutlineSearch, MdSearch,
@@ -10,18 +9,6 @@ import {
 
 export const Footer: React.FC = () => {
   const location = useLocation();
-  const footerClasses = cn(
-    "sticky bottom-0 z-50 bg-white border-t border-gray-200 mt-auto",
-    "dark:bg-gray-900 dark:border-gray-800",
-  );
-
-  const containerClasses = cn(
-    "max-w-4xl mx-auto px-4 py-3 md:px-6 md:py-4 lg:px-8"
-  );
-
-  const navClasses = cn(
-    "flex justify-center items-center gap-8"
-  );
 
   const IconButton = ({ 
     to, 
@@ -35,28 +22,27 @@ export const Footer: React.FC = () => {
     filledIcon: React.ComponentType<{ className?: string }>;
   }) => {
     const isActive = location.pathname === to;
-    
-    const iconButtonClasses = cn(
-      "p-2 rounded-lg transition-colors duration-200",
-      "focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2",
-      isActive 
-        ? "text-amber-900 dark:text-amber-800" 
-        : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-    );
-
     const IconComponent = isActive ? FilledIcon : OutlineIcon;
 
     return (
-      <Link to={to} className={iconButtonClasses} aria-label={ariaLabel}>
+      <Link 
+        to={to} 
+        className={`p-2 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 ${
+          isActive 
+            ? "text-amber-900 dark:text-amber-800" 
+            : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+        }`}
+        aria-label={ariaLabel}
+      >
         <IconComponent className="w-6 h-6" />
       </Link>
     );
   };
 
   return (
-    <footer className={footerClasses}>
-      <div className={containerClasses}>
-        <nav className={navClasses}>
+    <footer className="sticky bottom-0 z-50 bg-white border-t border-gray-200 mt-auto dark:bg-gray-900 dark:border-gray-800">
+      <div className="max-w-4xl mx-auto px-4 py-3 md:px-6 md:py-4 lg:px-8">
+        <nav className="flex justify-center items-center gap-8">
           <IconButton 
             to="/" 
             ariaLabel="ホーム" 

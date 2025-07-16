@@ -5,43 +5,16 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FiEdit2, FiSettings, FiUser, FiTrendingUp, FiStar, FiTarget } from "react-icons/fi";
-import { cn } from "@/lib/utils";
 
 export const Profile: React.FC = () => {
-  const containerClasses = cn(
-    "min-h-screen bg-gray-50",
-    "dark:bg-gray-900"
-  );
-
-  const mainClasses = cn(
-    "container max-w-2xl mx-auto px-4 py-6 space-y-6"
-  );
-
-  const profileHeaderClasses = cn(
-    "bg-white rounded-xl border shadow-sm p-6",
-    "dark:bg-gray-800 dark:border-gray-700"
-  );
-
-  const avatarContainerClasses = cn(
-    "flex flex-col sm:flex-row items-center gap-4 mb-6"
-  );
-
-  const userInfoClasses = cn(
-    "text-center sm:text-left flex-1"
-  );
-
-  const statsGridClasses = cn(
-    "grid grid-cols-1 md:grid-cols-2 gap-4"
-  );
-
   return (
-    <div className={containerClasses}>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       
-      <main className={mainClasses}>
+      <main className="container max-w-2xl mx-auto px-4 py-6 space-y-6">
         {/* プロフィールヘッダー */}
-        <div className={profileHeaderClasses}>
-          <div className={avatarContainerClasses}>
+        <div className="bg-white rounded-xl border shadow-sm p-6 dark:bg-gray-800 dark:border-gray-700">
+          <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
             <Avatar className="w-20 h-20 md:w-24 md:h-24">
               <AvatarImage src="/api/placeholder/150/150" alt="プロフィール画像" />
               <AvatarFallback className="text-xl">
@@ -49,7 +22,7 @@ export const Profile: React.FC = () => {
               </AvatarFallback>
             </Avatar>
             
-            <div className={userInfoClasses}>
+            <div className="text-center sm:text-left flex-1">
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                 山田太郎
               </h1>
@@ -71,7 +44,7 @@ export const Profile: React.FC = () => {
         </div>
 
         {/* 統計情報 */}
-        <div className={statsGridClasses}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* 基本情報 */}
           <Card>
             <CardHeader>

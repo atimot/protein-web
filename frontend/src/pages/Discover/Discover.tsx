@@ -4,7 +4,6 @@ import { Footer } from "@/components/layout/Footer";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { 
   FiSearch, 
   FiTrendingUp, 
@@ -17,28 +16,6 @@ import {
 
 export const Discover: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
-
-  const containerClasses = cn(
-    "min-h-screen bg-gray-50",
-    "dark:bg-gray-900"
-  );
-
-  const mainClasses = cn(
-    "container max-w-4xl mx-auto px-4 py-6 space-y-6"
-  );
-
-  const searchSectionClasses = cn(
-    "bg-white rounded-xl border shadow-sm p-6",
-    "dark:bg-gray-800 dark:border-gray-700"
-  );
-
-  const searchInputClasses = cn(
-    "pl-10 h-12 text-base"
-  );
-
-  const gridClasses = cn(
-    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-  );
 
   const trendingItems = [
     { name: "ザバス ホエイプロテイン", rating: 4.5, reviews: 128 },
@@ -61,12 +38,12 @@ export const Discover: React.FC = () => {
   ];
 
   return (
-    <div className={containerClasses}>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       
-      <main className={mainClasses}>
+      <main className="container max-w-4xl mx-auto px-4 py-6 space-y-6">
         {/* 検索セクション */}
-        <div className={searchSectionClasses}>
+        <div className="bg-white rounded-xl border shadow-sm p-6 dark:bg-gray-800 dark:border-gray-700">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             プロテインを発見しよう
           </h1>
@@ -77,7 +54,7 @@ export const Discover: React.FC = () => {
               placeholder="プロテインやブランドを検索..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={searchInputClasses}
+              className="pl-10 h-12 text-base"
             />
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
@@ -130,7 +107,7 @@ export const Discover: React.FC = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className={gridClasses}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {trendingItems.map((item, index) => (
                 <div key={index} className="p-4 border rounded-lg hover:shadow-md transition-shadow">
                   <div className="flex items-start justify-between mb-2">
