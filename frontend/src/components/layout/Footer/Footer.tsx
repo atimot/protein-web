@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
     return (
       <Link 
         to={to} 
-        className={`p-2 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 ${
+        className={`p-2 rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 ${
           isActive 
             ? "text-amber-900 dark:text-amber-800" 
             : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
