@@ -99,7 +99,7 @@ export const Registration: React.FC = () => {
         });
       } else {
         const errorData = await response.json();
-        setErrors({ submit: errorData.message || "登録に失敗しました" });
+        setErrors({ submit: errorData.error || "登録に失敗しました" });
       }
     } catch (error) {
       setErrors({ submit: "ネットワークエラーが発生しました" });
