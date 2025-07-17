@@ -29,7 +29,7 @@ func main() {
 	dbPort := os.Getenv("DB_PORT")
 	dbName := os.Getenv("DB_NAME")
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&charset=utf8mb4", dbUser, dbPassword, dbHost, dbPort, dbName)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
@@ -52,7 +52,8 @@ func main() {
 	h := handler.NewUserHandler(svc)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/users", h.GetUsers)
+	mux.HandleFunc("/api/users", h.GetUsers)
+	mux.HandleFunc("/api/register", h.RegisterUser)
 
 	fmt.Println("Server is running on port 8080")
 	if err := http.ListenAndServe(":8080", mux); err != nil {
