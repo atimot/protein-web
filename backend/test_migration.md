@@ -96,7 +96,7 @@ backend/
 ├── internal/
 │   └── migration/
 │       └── runner.go
-└── cmd/myapp/main.go
+└── cmd/server/main.go
 ```
 
 ## Next Steps

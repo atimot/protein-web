@@ -50,10 +50,13 @@ npm run storybook
 docker compose exec app bash
 
 # Build Go application
-go build -o myapp cmd/myapp/main.go
+go build -o server cmd/server/main.go
 
 # Run Go application
-./myapp
+./server
+
+# Run migrations
+go run cmd/migrate/main.go -action=up
 ```
 
 ## Architecture Overview
@@ -82,7 +85,8 @@ This is a full-stack protein supplement review application with:
 ### Backend Architecture
 - **Pattern**: Clean Architecture with layers
 - **Structure**:
-  - `cmd/myapp/main.go`: Application entry point
+  - `cmd/server/main.go`: HTTP server entry point
+  - `cmd/migrate/main.go`: Database migration CLI
   - `internal/handler/`: HTTP handlers
   - `internal/service/`: Business logic
   - `internal/repository/`: Data access layer

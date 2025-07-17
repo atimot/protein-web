@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"golang.org/x/crypto/bcrypt"
-	"myapp/internal/model"
-	"myapp/internal/repository"
+	"protein-web-backend/internal/model"
+	"protein-web-backend/internal/repository"
 )
 
 type UserService interface {

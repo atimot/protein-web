@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"myapp/internal/service"
+	"protein-web-backend/internal/service"
 )
 
 type UserHandler struct {

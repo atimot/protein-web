@@ -1,4 +1,4 @@
-module myapp
+module protein-web-backend
 
 go 1.24.2
 

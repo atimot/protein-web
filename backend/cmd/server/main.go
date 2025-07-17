@@ -6,12 +6,10 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 
-	"myapp/internal/handler"
-	"myapp/internal/migration"
-	"myapp/internal/repository"
-	"myapp/internal/service"
+	"protein-web-backend/internal/handler"
+	"protein-web-backend/internal/repository"
+	"protein-web-backend/internal/service"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
@@ -38,13 +36,6 @@ func main() {
 
 	if err := db.Ping(); err != nil {
 		log.Fatal(err)
-	}
-
-	// Run database migrations
-	migrationsDir := filepath.Join(".", "migrations")
-	migrationRunner := migration.NewRunner(db, migrationsDir)
-	if err := migrationRunner.Run(); err != nil {
-		log.Fatal("Migration failed:", err)
 	}
 
 	repo := repository.NewUserRepository(db)

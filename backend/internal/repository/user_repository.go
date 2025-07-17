@@ -2,7 +2,7 @@ package repository
 
 import (
 	"database/sql"
-	"myapp/internal/model"
+	"protein-web-backend/internal/model"
 )
 
 type UserRepository interface {
