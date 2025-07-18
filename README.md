@@ -19,6 +19,41 @@ docker compose up -d
 #### ブラウザで確認
 http://localhost:5173
 
+## データベースマイグレーション
+
+#### マイグレーション実行
+```
+docker compose exec app go run cmd/migrate/main.go -action=up
+```
+
+#### マイグレーション状態確認
+```
+docker compose exec app go run cmd/migrate/main.go -action=status
+```
+
+#### マイグレーションロールバック
+```
+docker compose exec app go run cmd/migrate/main.go -action=down
+```
+
+#### 新しいマイグレーション追加
+`backend/migrations/` ディレクトリに以下の命名規則でファイルを作成：
+
+```
+XXX_description.up.sql   # マイグレーション実行用
+XXX_description.down.sql # ロールバック用
+```
+
+例：
+```
+002_create_products_table.up.sql
+002_create_products_table.down.sql
+```
+
+- **XXX**: 3桁の連番（001, 002, 003...）
+- **description**: マイグレーションの説明（スネークケース）
+- **up.sql**: テーブル作成・カラム追加などの変更
+- **down.sql**: up.sqlの変更を元に戻す処理
 
 ## Tips
 #### コンテナの中に入りたいとき
