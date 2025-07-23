@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"protein-web-backend/internal/service"
+	"protein-web-backend/internal/types"
 )
 
 type UserHandler struct {
@@ -37,25 +38,7 @@ func (h *UserHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(users)
 }
 
-// RegisterUserRequest represents the registration request payload
-type RegisterUserRequest struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Name     string `json:"name,omitempty"`
-}
-
-// RegisterUserResponse represents the registration response payload
-type RegisterUserResponse struct {
-	ID        int    `json:"id"`
-	Email     string `json:"email"`
-	Name      *string `json:"name"`
-	Message   string `json:"message"`
-}
-
-// ErrorResponse represents an error response
-type ErrorResponse struct {
-	Error string `json:"error"`
-}
+// HTTP types are now imported from types package
 
 // RegisterUser handles user registration
 func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
@@ -73,16 +56,16 @@ func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		json.NewEncoder(w).Encode(ErrorResponse{Error: "Method not allowed"})
+		json.NewEncoder(w).Encode(types.ErrorResponse{Error: "Method not allowed"})
 		return
 	}
 
 	// Parse request body
-	var req RegisterUserRequest
+	var req types.RegisterUserRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid JSON format"})
+		json.NewEncoder(w).Encode(types.ErrorResponse{Error: "Invalid JSON format"})
 		return
 	}
 
@@ -90,14 +73,14 @@ func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	if strings.TrimSpace(req.Email) == "" {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(ErrorResponse{Error: "Email is required"})
+		json.NewEncoder(w).Encode(types.ErrorResponse{Error: "Email is required"})
 		return
 	}
 
 	if strings.TrimSpace(req.Password) == "" {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(ErrorResponse{Error: "Password is required"})
+		json.NewEncoder(w).Encode(types.ErrorResponse{Error: "Password is required"})
 		return
 	}
 
@@ -117,12 +100,12 @@ func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
 		
-		json.NewEncoder(w).Encode(ErrorResponse{Error: errorMsg})
+		json.NewEncoder(w).Encode(types.ErrorResponse{Error: errorMsg})
 		return
 	}
 
 	// Return success response
-	response := RegisterUserResponse{
+	response := types.RegisterUserResponse{
 		ID:      user.ID,
 		Email:   user.Email,
 		Name:    user.Name,
