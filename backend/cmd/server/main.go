@@ -7,9 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"protein-web-backend/internal/handler"
-	"protein-web-backend/internal/repository"
-	"protein-web-backend/internal/service"
+	"protein-web-backend/internal/factory"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
@@ -38,13 +36,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	repo := repository.NewUserRepository(db)
-	svc := service.NewUserService(repo)
-	h := handler.NewUserHandler(svc)
+	// Initialize application components using Factory
+	appFactory := factory.New(db)
+	_, _, handlers := appFactory.NewAppComponents()
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/api/users", h.GetUsers)
-	mux.HandleFunc("/api/register", h.RegisterUser)
+	mux.HandleFunc("/api/users", handlers.User.GetUsers)
+	mux.HandleFunc("/api/register", handlers.User.RegisterUser)
 
 	fmt.Println("Server is running on port 8080")
 	if err := http.ListenAndServe(":8080", mux); err != nil {
