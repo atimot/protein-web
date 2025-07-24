@@ -20,13 +20,14 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	Token   string `json:"token"`
-	User    User   `json:"user"`
-	Message string `json:"message"`
+	Token     string   `json:"token"`
+	User      UserInfo `json:"user"`
+	ExpiresAt string   `json:"expires_at"`
+	Message   string   `json:"message"`
 }
 
-// User represents the user data for API responses
-type User struct {
+// UserInfo represents the user data for API responses (without sensitive data)
+type UserInfo struct {
 	ID    int     `json:"id"`
 	Email string  `json:"email"`
 	Name  *string `json:"name"`

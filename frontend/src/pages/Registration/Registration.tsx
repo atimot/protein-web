@@ -80,8 +80,8 @@ export const Registration: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // TODO: Replace with actual API call
-      const response = await fetch("/api/register", {
+      // Step 1: Register user
+      const registerResponse = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,13 +92,38 @@ export const Registration: React.FC = () => {
         }),
       });
 
-      if (response.ok) {
-        // Registration successful
-        navigate("/login", { 
-          state: { message: "アカウントが作成されました。ログインしてください。" } 
+      if (registerResponse.ok) {
+        // Step 2: Auto-login after successful registration
+        const loginResponse = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
         });
+
+        if (loginResponse.ok) {
+          const loginData = await loginResponse.json();
+          
+          // Store JWT token and user info
+          localStorage.setItem("token", loginData.token);
+          localStorage.setItem("user", JSON.stringify(loginData.user));
+          
+          // Navigate to home page or dashboard
+          navigate("/", { 
+            state: { message: "アカウントが作成されました。ようこそ！" } 
+          });
+        } else {
+          // Registration succeeded but login failed - redirect to login page
+          navigate("/login", { 
+            state: { message: "アカウントが作成されました。ログインしてください。" } 
+          });
+        }
       } else {
-        const errorData = await response.json();
+        const errorData = await registerResponse.json();
         setErrors({ submit: errorData.error || "登録に失敗しました" });
       }
     } catch (error) {

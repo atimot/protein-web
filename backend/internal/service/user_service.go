@@ -2,9 +2,12 @@ package service
 
 import (
 	"errors"
+	"os"
 	"regexp"
 	"strings"
+	"time"
 
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 	"protein-web-backend/internal/model"
 	"protein-web-backend/internal/repository"
@@ -13,6 +16,7 @@ import (
 type UserService interface {
 	GetUsers() ([]model.User, error)
 	RegisterUser(email, password, name string) (*model.User, error)
+	LoginUser(email, password string) (string, *model.User, error) // returns: token, user, error
 }
 
 type userService struct {
@@ -95,4 +99,83 @@ func (s *userService) validateRegistrationInput(email, password string) error {
 	}
 
 	return nil
+}
+
+// LoginUser authenticates a user and returns a JWT token
+func (s *userService) LoginUser(email, password string) (string, *model.User, error) {
+	// Validate input
+	if err := s.validateLoginInput(email, password); err != nil {
+		return "", nil, err
+	}
+
+	// Get user by email
+	user, err := s.repo.GetByEmail(email)
+	if err != nil {
+		return "", nil, err
+	}
+	if user == nil {
+		return "", nil, errors.New("invalid email or password")
+	}
+
+	// Verify password
+	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
+	if err != nil {
+		return "", nil, errors.New("invalid email or password")
+	}
+
+	// Generate JWT token
+	token, err := s.generateJWTToken(user)
+	if err != nil {
+		return "", nil, errors.New("failed to generate token")
+	}
+
+	return token, user, nil
+}
+
+// validateLoginInput validates email and password for login
+func (s *userService) validateLoginInput(email, password string) error {
+	if strings.TrimSpace(email) == "" {
+		return errors.New("email is required")
+	}
+
+	if strings.TrimSpace(password) == "" {
+		return errors.New("password is required")
+	}
+
+	// Basic email format validation
+	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+	if !emailRegex.MatchString(email) {
+		return errors.New("invalid email format")
+	}
+
+	return nil
+}
+
+// generateJWTToken creates a JWT token for the user
+func (s *userService) generateJWTToken(user *model.User) (string, error) {
+	// Get JWT secret from environment variable
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if jwtSecret == "" {
+		jwtSecret = "your-secret-key" // Default for development (should be in .env)
+	}
+
+	// Create JWT claims
+	claims := jwt.MapClaims{
+		"user_id": user.ID,
+		"email":   user.Email,
+		"name":    user.Name,
+		"exp":     time.Now().Add(24 * time.Hour).Unix(), // 24 hours expiration
+		"iat":     time.Now().Unix(),
+	}
+
+	// Create token
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	// Sign token with secret
+	tokenString, err := token.SignedString([]byte(jwtSecret))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }

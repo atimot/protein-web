@@ -116,3 +116,68 @@ func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(response)
 }
+
+// LoginUser handles user login
+func (h *UserHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
+	// Set CORS headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	
+	// Handle preflight requests
+	if r.Method == "OPTIONS" {
+		return
+	}
+	
+	// Only allow POST method
+	if r.Method != "POST" {
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode(types.ErrorResponse{Error: "Method not allowed"})
+		return
+	}
+
+	// Parse request body
+	var req types.LoginRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(types.ErrorResponse{Error: "Invalid JSON format"})
+		return
+	}
+
+	// Call service to login user
+	token, user, err := h.service.LoginUser(req.Email, req.Password)
+	if err != nil {
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		
+		// Check for specific error types
+		errorMsg := err.Error()
+		if strings.Contains(errorMsg, "invalid email or password") {
+			w.WriteHeader(http.StatusUnauthorized)
+		} else if strings.Contains(errorMsg, "required") || strings.Contains(errorMsg, "invalid") {
+			w.WriteHeader(http.StatusBadRequest)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		
+		json.NewEncoder(w).Encode(types.ErrorResponse{Error: errorMsg})
+		return
+	}
+
+	// Return success response
+	response := types.LoginResponse{
+		Token: token,
+		User: types.UserInfo{
+			ID:    user.ID,
+			Email: user.Email,
+			Name:  user.Name,
+		},
+		ExpiresAt: "24h", // TODO: Calculate actual expiration time
+		Message:   "Login successful",
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(response)
+}

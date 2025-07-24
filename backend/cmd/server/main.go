@@ -43,6 +43,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/api/users", handlers.User.GetUsers)
 	mux.HandleFunc("/api/register", handlers.User.RegisterUser)
+	mux.HandleFunc("/api/login", handlers.User.LoginUser)
 
 	fmt.Println("Server is running on port 8080")
 	if err := http.ListenAndServe(":8080", mux); err != nil {
