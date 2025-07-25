@@ -2,9 +2,6 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
   MdOutlineHome, MdHome,
-  MdOutlineSearch, MdSearch,
-  MdOutlinePerson, MdPerson,
-  MdOutlineSettings, MdSettings
 } from "react-icons/md";
 
 export const Footer: React.FC = () => {
@@ -48,24 +45,6 @@ export const Footer: React.FC = () => {
             ariaLabel="ホーム" 
             outlineIcon={MdOutlineHome}
             filledIcon={MdHome}
-          />
-          <IconButton 
-            to="/discover" 
-            ariaLabel="発見" 
-            outlineIcon={MdOutlineSearch}
-            filledIcon={MdSearch}
-          />
-          <IconButton 
-            to="/profile" 
-            ariaLabel="プロフィール" 
-            outlineIcon={MdOutlinePerson}
-            filledIcon={MdPerson}
-          />
-          <IconButton 
-            to="/settings" 
-            ariaLabel="設定" 
-            outlineIcon={MdOutlineSettings}
-            filledIcon={MdSettings}
           />
         </nav>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { FiLogOut, FiUser } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
 
 export const Header: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -33,30 +33,6 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-4">
           {isAuthenticated ? (
             <>
-              {/* User Info */}
-              <div className="hidden sm:flex items-center gap-2 text-gray-600 dark:text-gray-300">
-                <FiUser className="h-4 w-4" />
-                <span className="text-sm">
-                  {user?.name || user?.email}
-                </span>
-              </div>
-
-              {/* Navigation Links */}
-              <nav className="hidden md:flex items-center gap-4">
-                <Link
-                  to="/discover"
-                  className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 transition-colors"
-                >
-                  発見
-                </Link>
-                <Link
-                  to="/profile"
-                  className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 transition-colors"
-                >
-                  プロフィール
-                </Link>
-              </nav>
-
               {/* Logout Button */}
               <Button
                 variant="outline"
