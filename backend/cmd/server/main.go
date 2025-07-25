@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"protein-web-backend/internal/factory"
+	"protein-web-backend/internal/middleware"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
@@ -45,8 +46,10 @@ func main() {
 	mux.HandleFunc("/api/register", handlers.User.RegisterUser)
 	mux.HandleFunc("/api/login", handlers.User.LoginUser)
 
+	corsHandler := middleware.CORSMiddleware(mux)
+
 	fmt.Println("Server is running on port 8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	if err := http.ListenAndServe(":8080", corsHandler); err != nil {
 		log.Fatal(err)
 	}
 }

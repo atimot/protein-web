@@ -18,41 +18,20 @@ func NewUserHandler(s service.UserService) *UserHandler {
 }
 
 func (h *UserHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
-	// Set CORS headers
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	
-	// Handle preflight requests
-	if r.Method == "OPTIONS" {
-		return
-	}
-	
 	users, err := h.service.GetUsers()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(types.ErrorResponse{Error: "Internal server error"})
 		return
 	}
-	
+
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(users)
 }
 
-// HTTP types are now imported from types package
-
-// RegisterUser handles user registration
 func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
-	// Set CORS headers
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	
-	// Handle preflight requests
-	if r.Method == "OPTIONS" {
-		return
-	}
-	
-	// Only allow POST method
 	if r.Method != "POST" {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -60,7 +39,6 @@ func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Parse request body
 	var req types.RegisterUserRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -69,7 +47,6 @@ func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Validate required fields
 	if strings.TrimSpace(req.Email) == "" {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
@@ -84,27 +61,24 @@ func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Call service to register user
 	user, err := h.service.RegisterUser(req.Email, req.Password, req.Name)
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		
-		// Check for specific error types
+
 		errorMsg := err.Error()
 		if strings.Contains(errorMsg, "already exists") {
 			w.WriteHeader(http.StatusConflict)
-		} else if strings.Contains(errorMsg, "invalid") || strings.Contains(errorMsg, "required") || 
-				  strings.Contains(errorMsg, "must") {
+		} else if strings.Contains(errorMsg, "invalid") || strings.Contains(errorMsg, "required") ||
+			strings.Contains(errorMsg, "must") {
 			w.WriteHeader(http.StatusBadRequest)
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
-		
+
 		json.NewEncoder(w).Encode(types.ErrorResponse{Error: errorMsg})
 		return
 	}
 
-	// Return success response
 	response := types.RegisterUserResponse{
 		ID:      user.ID,
 		Email:   user.Email,
@@ -117,19 +91,7 @@ func (h *UserHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-// LoginUser handles user login
 func (h *UserHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
-	// Set CORS headers
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	
-	// Handle preflight requests
-	if r.Method == "OPTIONS" {
-		return
-	}
-	
-	// Only allow POST method
 	if r.Method != "POST" {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -137,7 +99,6 @@ func (h *UserHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Parse request body
 	var req types.LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -146,12 +107,10 @@ func (h *UserHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Call service to login user
 	token, user, err := h.service.LoginUser(req.Email, req.Password)
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		
-		// Check for specific error types
+
 		errorMsg := err.Error()
 		if strings.Contains(errorMsg, "invalid email or password") {
 			w.WriteHeader(http.StatusUnauthorized)
@@ -160,12 +119,11 @@ func (h *UserHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
-		
+
 		json.NewEncoder(w).Encode(types.ErrorResponse{Error: errorMsg})
 		return
 	}
 
-	// Return success response
 	response := types.LoginResponse{
 		Token: token,
 		User: types.UserInfo{
@@ -173,7 +131,7 @@ func (h *UserHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 			Email: user.Email,
 			Name:  user.Name,
 		},
-		ExpiresAt: "24h", // TODO: Calculate actual expiration time
+		ExpiresAt: "24h",
 		Message:   "Login successful",
 	}
 
