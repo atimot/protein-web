@@ -4,6 +4,7 @@ import { Home } from "@/pages/Home";
 import { Profile } from "@/pages/Profile";
 import { Discover } from "@/pages/Discover";
 import { Registration } from "@/pages/Registration";
+import { Login } from "@/pages/Login";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 export const AppRoutes: React.FC = () => {
@@ -12,6 +13,7 @@ export const AppRoutes: React.FC = () => {
       <Routes>
         {/* 公開ルート（ログイン不要） */}
         <Route path="/register" element={<Registration />} />
+        <Route path="/login" element={<Login />} />
         
         {/* 保護されたルート（ログイン必須） */}
         <Route path="/" element={

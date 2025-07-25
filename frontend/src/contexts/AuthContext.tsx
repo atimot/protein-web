@@ -54,6 +54,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     initializeAuth();
+
+    // API呼び出しからの自動ログアウトイベントをリッスン
+    const handleAutoLogout = () => {
+      setToken(null);
+      setUser(null);
+    };
+
+    window.addEventListener('auth:logout', handleAutoLogout);
+
+    return () => {
+      window.removeEventListener('auth:logout', handleAutoLogout);
+    };
   }, []);
 
   // ログイン関数
