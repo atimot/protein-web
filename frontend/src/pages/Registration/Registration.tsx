@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from "react-icons/fi";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface RegistrationFormData {
   email: string;
@@ -15,6 +16,7 @@ interface RegistrationFormData {
 
 export const Registration: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState<RegistrationFormData>({
     email: "",
     password: "",
@@ -108,9 +110,8 @@ export const Registration: React.FC = () => {
         if (loginResponse.ok) {
           const loginData = await loginResponse.json();
           
-          // Store JWT token and user info
-          localStorage.setItem("token", loginData.token);
-          localStorage.setItem("user", JSON.stringify(loginData.user));
+          // Use AuthContext to login (which also stores to localStorage)
+          login(loginData.token, loginData.user);
           
           // Navigate to home page or dashboard
           navigate("/", { 
