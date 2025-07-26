@@ -1,51 +1,13 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { 
-  MdOutlineHome, MdHome,
-} from "react-icons/md";
+import { HomeButton } from "./HomeButton";
 
 export const Footer: React.FC = () => {
-  const location = useLocation();
-
-  const IconButton = ({ 
-    to, 
-    ariaLabel, 
-    outlineIcon: OutlineIcon, 
-    filledIcon: FilledIcon 
-  }: { 
-    to: string; 
-    ariaLabel: string;
-    outlineIcon: React.ComponentType<{ className?: string }>;
-    filledIcon: React.ComponentType<{ className?: string }>;
-  }) => {
-    const isActive = location.pathname === to;
-    const IconComponent = isActive ? FilledIcon : OutlineIcon;
-
-    return (
-      <Link 
-        to={to} 
-        className={`p-2 rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 ${
-          isActive 
-            ? "text-amber-900 dark:text-amber-800" 
-            : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-        }`}
-        aria-label={ariaLabel}
-      >
-        <IconComponent className="w-6 h-6" />
-      </Link>
-    );
-  };
 
   return (
     <footer className="sticky bottom-0 z-50 bg-white border-t border-gray-200 mt-auto dark:bg-gray-900 dark:border-gray-800">
       <div className="max-w-4xl mx-auto px-4 py-3 md:px-6 md:py-4 lg:px-8">
         <nav className="flex justify-center items-center gap-8">
-          <IconButton 
-            to="/" 
-            ariaLabel="ホーム" 
-            outlineIcon={MdOutlineHome}
-            filledIcon={MdHome}
-          />
+          <HomeButton />
         </nav>
       </div>
     </footer>
