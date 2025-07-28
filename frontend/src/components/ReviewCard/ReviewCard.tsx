@@ -16,7 +16,7 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
   });
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden rounded-none md:rounded-none">
       <CardHeader className="p-4 pb-0">
         <div className="flex items-center space-x-3">
           <Avatar>
@@ -70,7 +70,7 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
                 <img
                   src={image || "/placeholder.svg"}
                   alt={`${review.productName} 画像 ${index + 1}`}
-                  className="rounded-lg object-cover w-full h-full aspect-square"
+                  className="rounded-none object-cover w-full h-full aspect-square"
                   loading="lazy"
                 />
               </div>

@@ -1,17 +1,19 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { ReviewFeed } from "@/components/ReviewFeed";
+import { ReviewCard } from "@/components/ReviewCard";
+import { sampleReviews } from "@/data/sampleReviews";
 
 export const Home: React.FC = () => {
   return (
     <div className="min-h-screen">
       <Header />
       <main className="bg-gray-50">
-        <div className="container max-w-md mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold text-center mb-6">
-            プロテインレビュー
-          </h1>
-          <ReviewFeed />
+        <div className="container md:max-w-md mx-auto">
+          <div>
+            {sampleReviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))}
+          </div>
         </div>
       </main>
       <Footer />

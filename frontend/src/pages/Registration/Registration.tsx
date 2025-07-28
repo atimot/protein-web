@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from "react-icons/fi";
+import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface RegistrationFormData {
@@ -138,70 +137,75 @@ export const Registration: React.FC = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       
-      <main className="container max-w-md mx-auto px-4 py-8">
-        <Card>
-          <CardHeader className="text-center">
-            <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FiUser className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+      <div className="flex items-center justify-center min-h-[calc(100vh-80px)] md:p-4">
+        <div className="w-full md:max-w-md">
+          {/* Card wrapper */}
+          <div className="bg-white dark:bg-gray-800 shadow-sm md:border md:border-gray-200 md:dark:border-gray-700 md:rounded-none">
+            {/* Card Header */}
+            <div className="p-6 md:px-6 md:pt-6 md:pb-4">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  アカウント作成
+                </h1>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  proteInternet で新しいアカウントを作成しましょう
+                </p>
+              </div>
             </div>
-            <CardTitle className="text-2xl font-bold">アカウント作成</CardTitle>
-            <CardDescription>
-              proteInternet で新しいアカウントを作成しましょう
-            </CardDescription>
-          </CardHeader>
           
-          <CardContent>
+            {/* Card Content */}
+            <div className="p-6 md:px-6 md:pt-0 md:pb-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Email field */}
               <div className="space-y-2">
-                <Label htmlFor="email">メールアドレス</Label>
+                <Label htmlFor="email" className="text-sm font-medium">
+                  メールアドレス
+                </Label>
                 <div className="relative">
-                  <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <Input
                     id="email"
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="your@email.com"
+                    placeholder="your-email@example.com"
                     className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
                     disabled={isSubmitting}
                   />
                 </div>
                 {errors.email && (
-                  <p className="text-red-500 text-sm">{errors.email}</p>
+                  <p className="text-sm text-red-600 dark:text-red-400">{errors.email}</p>
                 )}
               </div>
 
               {/* Password field */}
               <div className="space-y-2">
-                <Label htmlFor="password">パスワード</Label>
+                <Label htmlFor="password" className="text-sm font-medium">
+                  パスワード
+                </Label>
                 <div className="relative">
-                  <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <Input
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="8文字以上で入力"
+                    placeholder="パスワードを入力"
                     className={`pl-10 pr-10 ${errors.password ? "border-red-500" : ""}`}
                     disabled={isSubmitting}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                   >
-                    {showPassword ? (
-                      <FiEyeOff className="w-4 h-4" />
-                    ) : (
-                      <FiEye className="w-4 h-4" />
-                    )}
+                    {showPassword ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-red-500 text-sm">{errors.password}</p>
+                  <p className="text-sm text-red-600 dark:text-red-400">{errors.password}</p>
                 )}
                 <p className="text-xs text-gray-500">
                   大文字、小文字、数字を含む8文字以上
@@ -210,9 +214,11 @@ export const Registration: React.FC = () => {
 
               {/* Confirm Password field */}
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">パスワード（確認）</Label>
+                <Label htmlFor="confirmPassword" className="text-sm font-medium">
+                  パスワード（確認）
+                </Label>
                 <div className="relative">
-                  <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <Input
                     id="confirmPassword"
                     name="confirmPassword"
@@ -226,24 +232,20 @@ export const Registration: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                   >
-                    {showConfirmPassword ? (
-                      <FiEyeOff className="w-4 h-4" />
-                    ) : (
-                      <FiEye className="w-4 h-4" />
-                    )}
+                    {showConfirmPassword ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+                  <p className="text-sm text-red-600 dark:text-red-400">{errors.confirmPassword}</p>
                 )}
               </div>
 
               {/* Submit error */}
               {errors.submit && (
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-3">
-                  <p className="text-red-600 dark:text-red-400 text-sm">{errors.submit}</p>
+                <div className="p-3 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-md">
+                  <p className="text-sm text-red-800 dark:text-red-200">{errors.submit}</p>
                 </div>
               )}
 
@@ -261,17 +263,18 @@ export const Registration: React.FC = () => {
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 すでにアカウントをお持ちですか？{" "}
-                <Link 
-                  to="/login" 
-                  className="text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 font-medium"
+                <Link
+                  to="/login"
+                  className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
                 >
                   ログイン
                 </Link>
               </p>
             </div>
-          </CardContent>
-        </Card>
-      </main>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

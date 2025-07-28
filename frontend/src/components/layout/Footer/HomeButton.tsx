@@ -10,14 +10,14 @@ export const HomeButton: React.FC = () => {
   return (
     <Link 
       to="/" 
-      className={`p-2 rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 ${
+      className={`rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 ${
         isActive 
           ? "text-amber-900 dark:text-amber-800" 
           : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
       }`}
       aria-label="ホーム"
     >
-      <IconComponent className="w-6 h-6" />
+      <IconComponent className="w-8 h-8" />
     </Link>
   );
 };

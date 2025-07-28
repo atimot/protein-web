@@ -1,9 +1,6 @@
-import React from "react";
-import { ReviewCard } from "@/components/ReviewCard/";
 import { Review } from "@/types/review";
 
-// サンプルデータ
-const reviews: Review[] = [
+export const sampleReviews: Review[] = [
   {
     id: 1,
     user: {
@@ -68,13 +65,3 @@ const reviews: Review[] = [
       "世界中で愛されているプロテインの定番です。溶けやすさは素晴らしく、シェイカーで10秒振るだけでほぼ完全に溶けます。泡立ちもほとんどなく、すぐに飲めるのが良いです。味も濃すぎず薄すぎず絶妙なバランス。少し値段は高めですが、品質を考えると納得できる価格です。",
   },
 ];
-
-export const ReviewFeed: React.FC = () => {
-  return (
-    <div className="space-y-6">
-      {reviews.map((review) => (
-        <ReviewCard key={review.id} review={review} />
-      ))}
-    </div>
-  );
-};
