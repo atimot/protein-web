@@ -1,19 +1,35 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
 import { ja } from "date-fns/locale";
 import { Review } from "@/types/review";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ProteinReviewCardProps {
   review: Review;
 }
 
 export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const postedDate = new Date(review.postedAt);
   const timeAgo = formatDistanceToNow(postedDate, {
     addSuffix: true,
     locale: ja,
   });
+
+  const handlePreviousImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? review.images.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === review.images.length - 1 ? 0 : prev + 1
+    );
+  };
 
   return (
     <Card className="overflow-hidden rounded-none md:rounded-none">
@@ -37,44 +53,89 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
       </CardHeader>
       <CardContent className="p-4">
         <div className="mb-4">
-          <h2 className="text-lg font-bold mb-1">{review.productName}</h2>
-          <div className="grid grid-cols-2 gap-2 mb-3">
-            <div className="text-sm">
-              <span className="font-medium">味の傾向:</span>
-              {review.flavorProfile}
-            </div>
-            <div className="text-sm">
-              <span className="font-medium">泡立ち:</span> {review.foamLevel}
-            </div>
-            <div className="text-sm">
-              <span className="font-medium">タンパク質量:</span>{" "}
-              {review.proteinPerServing}
-            </div>
-            <div className="text-sm">
-              <span className="font-medium">1回あたり:</span>{" "}
-              {review.pricePerServing}
+          <h2 className="text-lg font-bold mb-3">{review.productName}</h2>
+          
+          {/* 詳細情報グリッド */}
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-none p-3 mb-3">
+            <div className="grid grid-cols-1 gap-3">
+              {/* 味の傾向 */}
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">味の傾向</span>
+                <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{review.flavorProfile}</span>
+              </div>
+              
+              {/* 泡立ち */}
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">泡立ち</span>
+                <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{review.foamLevel}</span>
+              </div>
+              
+              {/* タンパク質量と価格 */}
+              <div className="grid grid-cols-2 gap-4 pt-2 border-t border-gray-200 dark:border-gray-700">
+                <div className="text-center">
+                  <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">タンパク質量</div>
+                  <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{review.proteinPerServing}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">1回あたり</div>
+                  <div className="text-lg font-bold text-green-600 dark:text-green-400">{review.pricePerServing}</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* 画像ギャラリー */}
         {review.images.length > 0 && (
-          <div
-            className={`grid gap-2 mb-4 ${review.images.length === 1 ? "grid-cols-1" : "grid-cols-2"}`}
-          >
-            {review.images.map((image, index) => (
-              <div
-                key={index}
-                className={`relative ${review.images.length > 2 && index >= 2 ? "col-span-1" : ""} ${review.images.length === 3 && index === 2 ? "col-span-2" : ""}`}
-              >
-                <img
-                  src={image || "/placeholder.svg"}
-                  alt={`${review.productName} 画像 ${index + 1}`}
-                  className="rounded-none object-cover w-full h-full aspect-square"
-                  loading="lazy"
-                />
+          <div className="relative mb-4">
+            <div className="relative aspect-square">
+              <img
+                src={review.images[currentImageIndex] || "/placeholder.svg"}
+                alt={`${review.productName} 画像 ${currentImageIndex + 1}`}
+                className="rounded-none object-cover w-full h-full"
+                loading="lazy"
+              />
+              
+              {/* ナビゲーションボタン */}
+              {review.images.length > 1 && (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white rounded-full"
+                    onClick={handlePreviousImage}
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white rounded-full"
+                    onClick={handleNextImage}
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </Button>
+                </>
+              )}
+            </div>
+            
+            {/* インジケーター */}
+            {review.images.length > 1 && (
+              <div className="flex justify-center gap-1.5 mt-2">
+                {review.images.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                      index === currentImageIndex
+                        ? "bg-gray-800 dark:bg-gray-200"
+                        : "bg-gray-300 dark:bg-gray-600"
+                    }`}
+                    onClick={() => setCurrentImageIndex(index)}
+                    aria-label={`画像 ${index + 1} を表示`}
+                  />
+                ))}
               </div>
-            ))}
+            )}
           </div>
         )}
 
