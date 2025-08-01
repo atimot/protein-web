@@ -20,14 +20,14 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
   });
 
   const handlePreviousImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === 0 ? review.images.length - 1 : prev - 1
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? review.images.length - 1 : prev - 1,
     );
   };
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === review.images.length - 1 ? 0 : prev + 1
+    setCurrentImageIndex((prev) =>
+      prev === review.images.length - 1 ? 0 : prev + 1,
     );
   };
 
@@ -54,31 +54,47 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
       <CardContent className="p-4">
         <div className="mb-4">
           <h2 className="text-lg font-bold mb-3">{review.productName}</h2>
-          
+
           {/* 詳細情報グリッド */}
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-none p-3 mb-3">
+          <div className="rounded-none p-3 mb-3">
             <div className="grid grid-cols-1 gap-3">
               {/* 味の傾向 */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">味の傾向</span>
-                <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{review.flavorProfile}</span>
+                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  味の傾向
+                </span>
+                <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  {review.flavorProfile}
+                </span>
               </div>
-              
+
               {/* 泡立ち */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">泡立ち</span>
-                <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{review.foamLevel}</span>
+                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  泡立ち
+                </span>
+                <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  {review.foamLevel}
+                </span>
               </div>
-              
+
               {/* タンパク質量と価格 */}
               <div className="grid grid-cols-2 gap-4 pt-2 border-t border-gray-200 dark:border-gray-700">
                 <div className="text-center">
-                  <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">タンパク質量</div>
-                  <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{review.proteinPerServing}</div>
+                  <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                    タンパク質量
+                  </div>
+                  <div className="text-lg font-bold">
+                    {review.proteinPerServing}
+                  </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">1回あたり</div>
-                  <div className="text-lg font-bold text-green-600 dark:text-green-400">{review.pricePerServing}</div>
+                  <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                    1回あたり
+                  </div>
+                  <div className="text-lg font-bold">
+                    {review.pricePerServing}
+                  </div>
                 </div>
               </div>
             </div>
@@ -87,7 +103,7 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
 
         {/* 画像ギャラリー */}
         {review.images.length > 0 && (
-          <div className="relative mb-4">
+          <div className="relative mb-4 -mx-4 md:mx-0">
             <div className="relative aspect-square">
               <img
                 src={review.images[currentImageIndex] || "/placeholder.svg"}
@@ -95,7 +111,7 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
                 className="rounded-none object-cover w-full h-full"
                 loading="lazy"
               />
-              
+
               {/* ナビゲーションボタン */}
               {review.images.length > 1 && (
                 <>
@@ -117,25 +133,23 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
                   </Button>
                 </>
               )}
+
+              {/* インジケーター */}
+              {review.images.length > 1 && (
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center gap-1.5 px-3 py-1.5">
+                  {review.images.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        index === currentImageIndex ? "bg-white" : "bg-white/20"
+                      }`}
+                      onClick={() => setCurrentImageIndex(index)}
+                      aria-label={`画像 ${index + 1} を表示`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
-            
-            {/* インジケーター */}
-            {review.images.length > 1 && (
-              <div className="flex justify-center gap-1.5 mt-2">
-                {review.images.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                      index === currentImageIndex
-                        ? "bg-gray-800 dark:bg-gray-200"
-                        : "bg-gray-300 dark:bg-gray-600"
-                    }`}
-                    onClick={() => setCurrentImageIndex(index)}
-                    aria-label={`画像 ${index + 1} を表示`}
-                  />
-                ))}
-              </div>
-            )}
           </div>
         )}
 
