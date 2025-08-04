@@ -12,9 +12,9 @@ export const sampleReviews: Review[] = [
     postedAt: "2023-05-15T09:30:00",
     images: [
       "/protein_sample.jpg",
-      "/protein_sample.jpg",
-      "/protein_sample.jpg",
-      "/protein_sample.jpg",
+      "/protein_sample2.webp",
+      "/protein_sample3.webp",
+      "/protein_sample4.webp",
     ],
     productName: "マッスルテック ナイトロテック ホエイゴールド",
     flavorProfile: "スイーツ系（チョコレートブラウニー）",

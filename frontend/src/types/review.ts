@@ -1,7 +1,7 @@
 export interface User {
   id: number;
   name: string;
-  avatar: string;
+  avatar?: string;
   level: string;
 }
 

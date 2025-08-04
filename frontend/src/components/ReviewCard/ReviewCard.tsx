@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow, differenceInHours } from "date-fns";
 import { ja } from "date-fns/locale";
 import { Review } from "@/types/review";
 import { useState } from "react";
@@ -14,10 +14,13 @@ interface ProteinReviewCardProps {
 export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const postedDate = new Date(review.postedAt);
-  const timeAgo = formatDistanceToNow(postedDate, {
-    addSuffix: true,
-    locale: ja,
-  });
+  const now = new Date();
+  const hoursAgo = differenceInHours(now, postedDate);
+
+  const displayDate =
+    hoursAgo < 24
+      ? formatDistanceToNow(postedDate, { addSuffix: true, locale: ja })
+      : format(postedDate, "yyyy年MM月dd日", { locale: ja });
 
   const handlePreviousImage = () => {
     setCurrentImageIndex((prev) =>
@@ -32,9 +35,9 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
   };
 
   return (
-    <Card className="overflow-hidden rounded-none md:rounded-none">
-      <CardHeader className="p-4 pb-0">
-        <div className="flex items-center space-x-3">
+    <Card className="overflow-hidden gap-2 py-4 border-none rounded-none">
+      <CardHeader className="px-3 gap-0">
+        <div className="flex items-center gap-2">
           <Avatar>
             <AvatarImage
               src={review.user.avatar || ""}
@@ -42,75 +45,31 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
             />
             <AvatarFallback>{review.user.name.slice(0, 2)}</AvatarFallback>
           </Avatar>
-          <div>
-            <div className="font-medium">{review.user.name}</div>
-            <div className="text-xs text-muted-foreground">
-              {review.user.level}
-            </div>
+          <div className="font-medium">{review.user.name}</div>
+          <div className="ml-auto text-xs text-muted-foreground">
+            {displayDate}
           </div>
-          <div className="ml-auto text-xs text-muted-foreground">{timeAgo}</div>
         </div>
       </CardHeader>
-      <CardContent className="p-4">
-        <div className="mb-4">
-          <h2 className="text-lg font-bold mb-3">{review.productName}</h2>
-
-          {/* 詳細情報グリッド */}
-          <div className="rounded-none p-3 mb-3">
-            <div className="grid grid-cols-1 gap-3">
-              {/* 味の傾向 */}
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                  味の傾向
-                </span>
-                <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  {review.flavorProfile}
-                </span>
-              </div>
-
-              {/* 泡立ち */}
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                  泡立ち
-                </span>
-                <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  {review.foamLevel}
-                </span>
-              </div>
-
-              {/* タンパク質量と価格 */}
-              <div className="grid grid-cols-2 gap-4 pt-2 border-t border-gray-200 dark:border-gray-700">
-                <div className="text-center">
-                  <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
-                    タンパク質量
-                  </div>
-                  <div className="text-lg font-bold">
-                    {review.proteinPerServing}
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
-                    1回あたり
-                  </div>
-                  <div className="text-lg font-bold">
-                    {review.pricePerServing}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <CardContent className="px-0">
         {/* 画像ギャラリー */}
         {review.images.length > 0 && (
-          <div className="relative mb-4 -mx-4 md:mx-0">
-            <div className="relative aspect-square">
-              <img
-                src={review.images[currentImageIndex] || "/placeholder.svg"}
-                alt={`${review.productName} 画像 ${currentImageIndex + 1}`}
-                className="rounded-none object-cover w-full h-full"
-                loading="lazy"
-              />
+          <div className="relative mb-4">
+            <div className="relative aspect-square overflow-hidden">
+              <div 
+                className="flex transition-transform duration-300 ease-in-out h-full"
+                style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
+              >
+                {review.images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image || "/placeholder.svg"}
+                    alt={`${review.productName} 画像 ${index + 1}`}
+                    className="rounded-none object-cover w-full h-full flex-shrink-0"
+                    loading="lazy"
+                  />
+                ))}
+              </div>
 
               {/* ナビゲーションボタン */}
               {review.images.length > 1 && (
@@ -133,29 +92,20 @@ export const ReviewCard: React.FC<ProteinReviewCardProps> = ({ review }) => {
                   </Button>
                 </>
               )}
-
-              {/* インジケーター */}
-              {review.images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center gap-1.5 px-3 py-1.5">
-                  {review.images.map((_, index) => (
-                    <button
-                      key={index}
-                      className={`w-2 h-2 rounded-full transition-colors ${
-                        index === currentImageIndex ? "bg-white" : "bg-white/20"
-                      }`}
-                      onClick={() => setCurrentImageIndex(index)}
-                      aria-label={`画像 ${index + 1} を表示`}
-                    />
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         )}
 
-        {/* コメント */}
-        <div className="text-sm">
-          <p>{review.comment}</p>
+        {/* プロテイン情報 */}
+        <div className="px-3 pb-2">
+          <div className="flex gap-4 text-sm text-muted-foreground mb-2">
+            <span>タンパク質: {review.proteinPerServing}</span>
+            <span>価格: {review.pricePerServing}</span>
+          </div>
+          {/* コメント */}
+          <div className="text-sm whitespace-pre-wrap">
+            <p>{review.comment}</p>
+          </div>
         </div>
       </CardContent>
     </Card>
