@@ -2,14 +2,16 @@ import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ReviewCard } from "@/components/ReviewCard";
-import { FloatingActionButton } from "@/components/FloatingActionButton/FloatingActionButton";
 import { ReviewPostForm } from "@/components/ReviewPostForm/ReviewPostForm";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import { sampleReviews } from "@/data/sampleReviews";
 import { ReviewFormData } from "@/types/review";
 
@@ -36,21 +38,22 @@ export const Home: React.FC = () => {
       </main>
       <Footer />
 
-      <FloatingActionButton onClick={() => setIsSheetOpen(true)} />
-
-      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen} modal={false}>
-        <SheetContent
-          side="bottom"
-          className="h-[90vh] overflow-y-auto data-[state=open]:duration-200 data-[state=closed]:duration-150"
-          forceMount
-        >
-          <SheetHeader>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button
+            size="icon"
+            className="fixed bottom-4 right-4 h-14 w-14 rounded-full z-50 touch-manipulation"
+          >
+            <Plus />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="bottom" className="h-[90vh] gap-0 flex flex-col p-0">
+          <SheetHeader className="px-4">
             <SheetTitle>レビューを投稿</SheetTitle>
           </SheetHeader>
-          <div className="mt-4 max-w-md mx-auto w-full">
+          <div className="flex-1 px-4 relative">
             <ReviewPostForm
               onSubmit={handleSubmitReview}
-              onCancel={() => setIsSheetOpen(false)}
             />
           </div>
         </SheetContent>
