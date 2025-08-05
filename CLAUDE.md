@@ -2,6 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Additional Rules
+When working on this project, also check for and load any `.cursor/rules` files found in subdirectories. These files may contain directory-specific guidelines or rules that should be followed when working on code in those directories.
+
 ## Development Commands
 
 ### Docker-based Development

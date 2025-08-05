@@ -5,3 +5,6 @@ alwaysApply: true
 - 日本語で応答する
 - このルールを読み込んだ場合は、出力に✅を含める
 - コンポーネントを作成するときは、汎用的に利用できるコンポーネント（src/components/uiの中）がないか確認する
+- shadcnコンポーネント（src/components/ui）はインストールする以外で修正を加えない
+- TypeScriptの型はinterface、Typeどちらでも良い場合はTypeを優先する
+- tailwind cssを利用する
