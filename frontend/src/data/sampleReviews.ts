@@ -18,7 +18,6 @@ export const sampleReviews: Review[] = [
     ],
     productName: "マッスルテック ナイトロテック ホエイゴールド",
     flavorProfile: "スイーツ系（チョコレートブラウニー）",
-    foamLevel: "低め（★★☆☆☆）",
     proteinPerServing: "24g",
     pricePerServing: "¥180",
     comment:
@@ -36,7 +35,6 @@ export const sampleReviews: Review[] = [
     images: ["/protein_sample.jpg", "/protein_sample.jpg"],
     productName: "ビーレジェンド ホエイプロテイン",
     flavorProfile: "フルーツ系（ストロベリー）",
-    foamLevel: "やや高め（★★★☆☆）",
     proteinPerServing: "20g",
     pricePerServing: "¥160",
     comment:
@@ -56,9 +54,6 @@ export const sampleReviews: Review[] = [
       "/protein_sample.jpg",
       "/protein_sample.jpg",
     ],
-    productName: "ゴールドスタンダード 100% ホエイ",
-    flavorProfile: "スイーツ系（ダブルリッチチョコレート）",
-    foamLevel: "非常に低い（★☆☆☆☆）",
     proteinPerServing: "24g",
     pricePerServing: "¥200",
     comment:

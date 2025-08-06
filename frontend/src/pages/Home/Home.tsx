@@ -47,14 +47,12 @@ export const Home: React.FC = () => {
             <Plus />
           </Button>
         </SheetTrigger>
-        <SheetContent side="bottom" className="h-[90vh] gap-0 flex flex-col p-0">
-          <SheetHeader className="px-4">
+        <SheetContent side="bottom" className="h-[90vh] flex flex-col gap-0">
+          <SheetHeader>
             <SheetTitle>レビューを投稿</SheetTitle>
           </SheetHeader>
-          <div className="flex-1 px-4 relative">
-            <ReviewPostForm
-              onSubmit={handleSubmitReview}
-            />
+          <div className="flex-1 min-h-0">
+            <ReviewPostForm onSubmit={handleSubmitReview} />
           </div>
         </SheetContent>
       </Sheet>

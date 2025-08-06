@@ -10,19 +10,12 @@ export interface Review {
   user: User;
   postedAt: string;
   images: string[];
-  productName: string;
-  flavorProfile: string;
-  foamLevel: string;
   proteinPerServing: string;
   pricePerServing: string;
   comment: string;
 }
 
 export interface ReviewFormData {
-  productName: string;
-  flavorProfile: string;
-  flavorType: string;
-  foamLevel: string;
   proteinPerServing: string;
   pricePerServing: string;
   comment: string;
