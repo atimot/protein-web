@@ -1,0 +1,61 @@
+---
+description: Goバックエンド開発ルール（クリーンアーキテクチャ）
+alwaysApply: false
+---
+
+# アーキテクチャ規約
+- クリーンアーキテクチャパターンを厳守
+- 依存関係の方向: handler → service → repository
+- ビジネスロジックはserviceレイヤーに実装
+- データアクセスロジックはrepositoryレイヤーに実装
+
+# ディレクトリ構造
+```
+internal/
+  handler/    # HTTPハンドラー（リクエスト/レスポンスの処理）
+  service/    # ビジネスロジック
+  repository/ # データアクセス層
+  model/      # データモデル定義
+  factory/    # 依存性注入の設定
+  middleware/ # HTTPミドルウェア
+  types/      # 共通型定義
+```
+
+# コーディング規約
+- エラーは適切にラップして返す（`fmt.Errorf`を使用）
+- HTTPステータスコードを適切に使用
+- 構造体のフィールドにはJSONタグを付ける
+- インターフェースは使用する側で定義
+
+# データベース
+- MySQL 8.4を使用
+- マイグレーションは`cmd/migrate/main.go`で管理
+- SQLは`database/sql`パッケージを直接使用
+
+# エラーハンドリング
+- カスタムエラー型を定義して使用
+- ユーザー向けエラーメッセージとログ用エラーを区別
+- 適切なHTTPステータスコードを返す
+
+# テスト
+- Go標準の`testing`パッケージを使用
+- テーブルドリブンテストを推奨
+- モックは`interface`を活用
+
+# 開発コマンド
+```bash
+# コンテナに入る
+docker compose exec app bash
+
+# ビルド
+go build -o server cmd/server/main.go
+
+# 実行
+./server
+
+# マイグレーション実行
+go run cmd/migrate/main.go -action=up
+
+# テスト実行
+go test ./...
+```

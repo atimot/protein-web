@@ -1,10 +1,50 @@
 ---
-alwaysApply: true
+description: React/TypeScriptフロントエンド開発ルール
+alwaysApply: false
 ---
 
-- 日本語で応答する
-- このルールを読み込んだ場合は、出力に✅を含める
-- コンポーネントを作成するときは、汎用的に利用できるコンポーネント（src/components/uiの中）がないか確認する
-- shadcnコンポーネント（src/components/ui）はインストールする以外で修正を加えない
-- TypeScriptの型はinterface、Typeどちらでも良い場合はTypeを優先する
-- tailwind cssを利用する
+# Reactコンポーネント開発
+- 関数コンポーネントのみを使用（クラスコンポーネントは禁止）
+- 新規コンポーネントには必ずStorybookストーリーを作成
+- UIコンポーネントは`src/components/ui/`の既存パターンに従う
+- コンポーネントは`src/components/`ディレクトリに配置
+
+# TypeScript規約
+- 型定義は`src/types/`ディレクトリに配置
+- `any`型の使用は避ける
+- インターフェース名に`I`プレフィックスは付けない
+- 既存の型定義（`src/types/review.ts`など）を活用
+
+# スタイリング
+- TailwindCSS v4を使用
+- `cn()`ユーティリティ（clsx + tailwind-merge）を活用
+- インラインスタイルは使用しない
+- Radix UIコンポーネント + TailwindCSSパターンを使用
+
+# 状態管理
+- Zustandを使用（現在はコメントアウト中）
+- グローバル状態は最小限に抑える
+- 認証状態はAuthContextで管理
+
+# テスト
+- Vitestを使用
+- Storybook Testingアドオンを活用
+- Playwrightでブラウザテスト
+
+# 開発コマンド
+```bash
+# コンテナに入る
+docker compose exec node bash
+
+# 開発サーバー（compose経由で既に起動）
+npm run dev
+
+# ビルド
+npm run build
+
+# リンティング
+npm run lint
+
+# Storybook
+npm run storybook
+```
