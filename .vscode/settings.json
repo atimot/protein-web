@@ -15,13 +15,6 @@
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.suggest.autoImports": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "eslint.workingDirectories": ["frontend"],
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
   "tailwindCSS.includeLanguages": {
     "typescript": "javascript",
     "typescriptreact": "javascript"
@@ -82,21 +75,16 @@
     "editor.insertSpaces": false
   },
   "go.useLanguageServer": true,
-  "go.lintTool": "golangci-lint",
   "go.lintOnSave": "package",
   "go.vetOnSave": "package",
   "go.buildOnSave": "package",
   "go.testOnSave": false,
   "go.coverOnSave": false,
-  "go.goroot": "",
-  "go.gopath": "",
   "go.toolsManagement.checkForUpdates": "local",
   "go.toolsManagement.autoUpdate": true,
-  "go.alternateTools": {},
   "go.buildTags": "",
   "go.testFlags": ["-v"],
   "go.testTimeout": "30s",
-  "go.gocodeAutoBuild": false,
   "go.delveConfig": {
     "dlvLoadConfig": {
       "followPointers": true,
@@ -108,16 +96,7 @@
     "apiVersion": 2,
     "showGlobalVariables": false
   },
-  "go.languageServerExperimentalFeatures": {
-    "diagnostics": true,
-    "documentLink": true
-  },
   "go.languageServerFlags": [],
-  "go.surveys": {
-    "gonew": false,
-    "govulncheck": false,
-    "workspace": false
-  },
   "gopls": {
     "ui.semanticTokens": true,
     "formatting.gofumpt": true,

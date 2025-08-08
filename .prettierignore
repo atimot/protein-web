@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+*.min.js
+*.min.css
+
+# Coverage
+coverage/
+*.lcov
+
+# Docker
+docker-compose*.yml
+Dockerfile*
+
+# Database
+*.sql
+migrations/
+
+# Temporary files
+tmp/
+temp/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+go.sum
+
+# Auto-generated files
+*.generated.*
+components.json
