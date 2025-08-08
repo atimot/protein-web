@@ -14,14 +14,26 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { sampleReviews } from "@/data/sampleReviews";
 import { ReviewFormData } from "@/types/review";
+import { reviewApi } from "@/api/reviews";
+import { toast } from "sonner";
 
 export const Home: React.FC = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmitReview = (data: ReviewFormData) => {
-    console.log("Review submitted:", data);
-    // TODO: APIに送信する処理を実装
-    setIsSheetOpen(false);
+  const handleSubmitReview = async (data: ReviewFormData) => {
+    setIsSubmitting(true);
+    try {
+      await reviewApi.createReview(data);
+      toast.success("レビューが投稿されました");
+      setIsSheetOpen(false);
+      // TODO: レビュー一覧を再取得して更新
+    } catch (error) {
+      console.error("Review submission error:", error);
+      toast.error(error instanceof Error ? error.message : "レビューの投稿に失敗しました");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -52,7 +64,7 @@ export const Home: React.FC = () => {
             <SheetTitle>レビューを投稿</SheetTitle>
           </SheetHeader>
           <div className="flex-1 min-h-0">
-            <ReviewPostForm onSubmit={handleSubmitReview} />
+            <ReviewPostForm onSubmit={handleSubmitReview} isSubmitting={isSubmitting} />
           </div>
         </SheetContent>
       </Sheet>

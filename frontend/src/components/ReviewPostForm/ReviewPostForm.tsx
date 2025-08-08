@@ -8,9 +8,10 @@ import { ReviewFormData } from "@/types/review";
 
 interface ReviewPostFormProps {
   onSubmit: (data: ReviewFormData) => void;
+  isSubmitting?: boolean;
 }
 
-export const ReviewPostForm: React.FC<ReviewPostFormProps> = ({ onSubmit }) => {
+export const ReviewPostForm: React.FC<ReviewPostFormProps> = ({ onSubmit, isSubmitting = false }) => {
   const [formData, setFormData] = useState<ReviewFormData>({
     proteinPerServing: "",
     pricePerServing: "",
@@ -141,8 +142,9 @@ export const ReviewPostForm: React.FC<ReviewPostFormProps> = ({ onSubmit }) => {
           form="review-form"
           type="submit"
           className="w-full touch-manipulation"
+          disabled={isSubmitting}
         >
-          投稿する
+          {isSubmitting ? "投稿中..." : "投稿する"}
         </Button>
       </div>
     </div>

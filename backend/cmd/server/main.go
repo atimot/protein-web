@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"protein-web-backend/internal/factory"
 	"protein-web-backend/internal/middleware"
@@ -45,6 +46,27 @@ func main() {
 	mux.HandleFunc("/api/users", handlers.User.GetUsers)
 	mux.HandleFunc("/api/register", handlers.User.RegisterUser)
 	mux.HandleFunc("/api/login", handlers.User.LoginUser)
+	
+	// Review endpoints
+	mux.HandleFunc("/api/reviews", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodPost:
+			// Apply auth middleware to POST requests
+			middleware.AuthMiddleware(handlers.Review.CreateReview)(w, r)
+		case http.MethodGet:
+			handlers.Review.GetAllReviews(w, r)
+		default:
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+	})
+	mux.HandleFunc("/api/reviews/", handlers.Review.GetReview)
+	mux.HandleFunc("/api/users/", func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasSuffix(r.URL.Path, "/reviews") {
+			handlers.Review.GetUserReviews(w, r)
+		} else {
+			http.Error(w, "Not found", http.StatusNotFound)
+		}
+	})
 
 	corsHandler := middleware.CORSMiddleware(mux)
 

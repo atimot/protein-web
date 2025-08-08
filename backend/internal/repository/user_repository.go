@@ -9,6 +9,7 @@ type UserRepository interface {
 	GetAll() ([]model.User, error)
 	Create(user *model.User) error
 	GetByEmail(email string) (*model.User, error)
+	GetByID(id int) (*model.User, error)
 }
 
 type userRepository struct {
@@ -75,6 +76,35 @@ func (r *userRepository) GetByEmail(email string) (*model.User, error) {
 	var createdAt, updatedAt sql.NullTime
 	
 	err := r.DB.QueryRow(query, email).Scan(
+		&user.ID, &user.Email, &user.PasswordHash, &user.Name, &createdAt, &updatedAt,
+	)
+	
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil // User not found
+		}
+		return nil, err
+	}
+	
+	// Handle nullable timestamps
+	if createdAt.Valid {
+		user.CreatedAt = createdAt.Time
+	}
+	if updatedAt.Valid {
+		user.UpdatedAt = updatedAt.Time
+	}
+	
+	return &user, nil
+}
+
+// GetByID retrieves a user by ID
+func (r *userRepository) GetByID(id int) (*model.User, error) {
+	query := `SELECT id, email, password_hash, name, created_at, updated_at FROM users WHERE id = ?`
+	
+	var user model.User
+	var createdAt, updatedAt sql.NullTime
+	
+	err := r.DB.QueryRow(query, id).Scan(
 		&user.ID, &user.Email, &user.PasswordHash, &user.Name, &createdAt, &updatedAt,
 	)
 	
