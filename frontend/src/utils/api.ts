@@ -61,14 +61,14 @@ export const apiRequest = async (
 export const apiGet = (url: string, options: ApiRequestOptions = {}) =>
   apiRequest(url, { ...options, method: 'GET' });
 
-export const apiPost = (url: string, data: any, options: ApiRequestOptions = {}) =>
+export const apiPost = (url: string, data: unknown, options: ApiRequestOptions = {}) =>
   apiRequest(url, {
     ...options,
     method: 'POST',
     body: JSON.stringify(data),
   });
 
-export const apiPut = (url: string, data: any, options: ApiRequestOptions = {}) =>
+export const apiPut = (url: string, data: unknown, options: ApiRequestOptions = {}) =>
   apiRequest(url, {
     ...options,
     method: 'PUT',

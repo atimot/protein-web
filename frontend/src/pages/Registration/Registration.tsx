@@ -126,7 +126,7 @@ export const Registration: React.FC = () => {
         const errorData = await registerResponse.json();
         setErrors({ submit: errorData.error || "登録に失敗しました" });
       }
-    } catch (error) {
+    } catch {
       setErrors({ submit: "ネットワークエラーが発生しました" });
     } finally {
       setIsSubmitting(false);

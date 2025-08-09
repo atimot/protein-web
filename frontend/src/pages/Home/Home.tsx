@@ -50,7 +50,7 @@ export const Home: React.FC = () => {
       </main>
       <Footer />
 
-      <Sheet>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
           <Button
             size="icon"

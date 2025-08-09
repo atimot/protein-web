@@ -1,4 +1,4 @@
-import { ReviewFormData } from "@/types/review";
+import { ReviewFormData, Review } from "@/types/review";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
@@ -9,9 +9,21 @@ export interface CreateReviewRequest {
   images: string[];
 }
 
+export interface CreateReviewResponse {
+  id: number;
+  message?: string;
+}
+
+export interface ReviewsResponse {
+  reviews: Review[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
 export const reviewApi = {
   // レビューを投稿
-  async createReview(data: ReviewFormData): Promise<any> {
+  async createReview(data: ReviewFormData): Promise<CreateReviewResponse> {
     const token = localStorage.getItem("token");
     if (!token) {
       throw new Error("認証が必要です");
@@ -45,7 +57,7 @@ export const reviewApi = {
   },
 
   // 全レビューを取得
-  async getAllReviews(limit = 20, offset = 0): Promise<any[]> {
+  async getAllReviews(limit = 20, offset = 0): Promise<Review[]> {
     const response = await fetch(
       `${API_BASE_URL}/api/reviews?limit=${limit}&offset=${offset}`,
     );
@@ -58,7 +70,7 @@ export const reviewApi = {
   },
 
   // 特定のレビューを取得
-  async getReview(id: number): Promise<any> {
+  async getReview(id: number): Promise<Review> {
     const response = await fetch(`${API_BASE_URL}/api/reviews/${id}`);
 
     if (!response.ok) {
@@ -73,7 +85,7 @@ export const reviewApi = {
     userId: number,
     limit = 20,
     offset = 0,
-  ): Promise<any[]> {
+  ): Promise<Review[]> {
     const response = await fetch(
       `${API_BASE_URL}/api/users/${userId}/reviews?limit=${limit}&offset=${offset}`,
     );
