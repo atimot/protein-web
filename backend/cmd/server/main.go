@@ -46,7 +46,7 @@ func main() {
 	mux.HandleFunc("/api/users", handlers.User.GetUsers)
 	mux.HandleFunc("/api/register", handlers.User.RegisterUser)
 	mux.HandleFunc("/api/login", handlers.User.LoginUser)
-	
+
 	// Review endpoints
 	mux.HandleFunc("/api/reviews", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
