@@ -113,7 +113,7 @@ export const Login: React.FC = () => {
         const errorData = await response.json();
         setErrors({ submit: errorData.error || "ログインに失敗しました" });
       }
-    } catch (error) {
+    } catch {
       setErrors({ submit: "ネットワークエラーが発生しました" });
     } finally {
       setIsSubmitting(false);
